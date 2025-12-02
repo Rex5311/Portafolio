@@ -23,18 +23,3 @@ services:
         sync: false
       - key: CORS_ORIGIN
         sync: false
-
-  - type: pserv
-    name: portafolio-db
-    runtime: docker
-    plan: free
-    ipAllowList: []
-    env: docker
-    dockerfilePath: ./Dockerfile.postgres
-    envVars:
-      - key: POSTGRES_DB
-        value: portafolio_db
-      - key: POSTGRES_USER
-        value: postgres
-      - key: POSTGRES_PASSWORD
-        generateValue: true
