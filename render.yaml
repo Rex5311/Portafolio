@@ -1,11 +1,9 @@
 services:
-  # Frontend - React with Vite
-  - type: web
+  # Frontend - build as static site (no vite preview)
+  - type: static
     name: portafolio-frontend
-    runtime: node
     buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npm run preview
-    staticPublicPath: frontend/dist
+    publishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
         value: https://portafolio-backend.onrender.com/api
@@ -35,4 +33,3 @@ services:
         sync: false
       - key: CORS_ORIGIN
         value: https://portafolio-frontend.onrender.com
-
