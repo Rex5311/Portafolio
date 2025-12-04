@@ -1,4 +1,16 @@
 services:
+  # Frontend - React with Vite
+  - type: web
+    name: portafolio-frontend
+    runtime: node
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm run preview
+    staticPublicPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://portafolio-backend.onrender.com/api
+
+  # Backend - Node.js Express
   - type: web
     name: portafolio-backend
     runtime: node
@@ -22,4 +34,5 @@ services:
       - key: DB_PASSWORD
         sync: false
       - key: CORS_ORIGIN
-        sync: false
+        value: https://portafolio-frontend.onrender.com
+
