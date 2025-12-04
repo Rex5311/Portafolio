@@ -8,6 +8,15 @@ const Hero = () => {
     >
       <div className="container-custom">
         <div className="text-center animate-fadeInUp">
+          {/* Profile Image */}
+          <div className="mb-8 flex justify-center">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D4D03AQFMmwgFE29Giw/profile-displayphoto-crop_800_800/B4DZrgj5DYGkAI-/0/1764704099390?e=1766620800&v=beta&t=VJ-_NKIiXguUB-KwIY7PezPSye0XmQ9F4urT5FSZB80"
+              alt="Perfil de Juan Esteban Agudelo"
+              className="w-32 h-32 rounded-full border-4 border-primary-600 shadow-lg object-cover hover:scale-110 transition-transform duration-300"
+            />
+          </div>
+
           {/* Greeting */}
           <p className="text-primary-600 dark:text-primary-400 font-medium text-lg mb-4">
             Hola, soy
