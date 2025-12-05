@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/api';
-import { isValidEmail } from '../utils/helpers';
+import { useState } from "react";
+import { FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
+import { supabase } from "../lib/supabaseClient";
+import { isValidEmail } from "../utils/helpers";
 
 /**
  * Contact Component
@@ -10,12 +9,12 @@ import { isValidEmail } from '../utils/helpers';
  */
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
-  const [status, setStatus] = useState({ type: '', message: '' });
+  const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -30,7 +29,7 @@ const Contact = () => {
     });
     // Limpiar error del campo al escribir
     if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
+      setErrors({ ...errors, [name]: "" });
     }
   };
 
@@ -39,27 +38,27 @@ const Contact = () => {
    */
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+      newErrors.name = "El nombre es requerido";
     }
-    
+
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es requerido';
+      newErrors.email = "El email es requerido";
     } else if (!isValidEmail(formData.email)) {
-      newErrors.email = 'Email inválido';
+      newErrors.email = "Email inválido";
     }
-    
+
     if (!formData.subject.trim()) {
-      newErrors.subject = 'El asunto es requerido';
+      newErrors.subject = "El asunto es requerido";
     }
-    
+
     if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+      newErrors.message = "El mensaje es requerido";
     } else if (formData.message.length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+      newErrors.message = "El mensaje debe tener al menos 10 caracteres";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -69,26 +68,38 @@ const Contact = () => {
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setLoading(true);
-    setStatus({ type: '', message: '' });
+    setStatus({ type: "", message: "" });
 
     try {
-      await axios.post(API_ENDPOINTS.contact, formData);
+      const { error } = await supabase.from("messages").insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          message: `${formData.subject}\n\n${formData.message}`,
+          status: "unread",
+        },
+      ]);
+
+      if (error) throw error;
+
       setStatus({
-        type: 'success',
-        message: '¡Mensaje enviado exitosamente! Te contactaré pronto.',
+        type: "success",
+        message: "¡Mensaje enviado exitosamente! Te contactaré pronto.",
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: "", email: "", subject: "", message: "" });
       setErrors({});
     } catch (error) {
       setStatus({
-        type: 'error',
-        message: error.response?.data?.error || 'Error al enviar el mensaje. Por favor intenta de nuevo.',
+        type: "error",
+        message:
+          error.message ||
+          "Error al enviar el mensaje. Por favor intenta de nuevo.",
       });
     } finally {
       setLoading(false);
@@ -98,27 +109,27 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: <FiMail />,
-      title: 'Email Personal',
-      value: 'juanesteban5311@gmail.com',
-      link: 'mailto:juanesteban5311@gmail.com',
+      title: "Email Personal",
+      value: "juanesteban5311@gmail.com",
+      link: "mailto:juanesteban5311@gmail.com",
     },
     {
       icon: <FiMail />,
-      title: 'Email Estudiantil',
-      value: 'juan.agudelo.carmona@correounivalle.edu.co',
-      link: 'mailto:juan.agudelo.carmona@correounivalle.edu.co',
+      title: "Email Estudiantil",
+      value: "juan.agudelo.carmona@correounivalle.edu.co",
+      link: "mailto:juan.agudelo.carmona@correounivalle.edu.co",
     },
     {
       icon: <FiMapPin />,
-      title: 'Ubicación',
-      value: 'Cali, Colombia',
+      title: "Ubicación",
+      value: "Cali, Colombia",
       link: null,
     },
     {
       icon: <FiPhone />,
-      title: 'Teléfono',
-      value: '+57 316 328 xxxx',
-      link: 'tel:+573163285311',
+      title: "Teléfono",
+      value: "+57 316 328 xxxx",
+      link: "tel:+573163285311",
     },
   ];
 
@@ -126,9 +137,7 @@ const Contact = () => {
     <section id="contact" className="section-padding">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Contáctame
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Contáctame</h2>
           <div className="w-20 h-1 bg-primary-600 mx-auto mb-6"></div>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             ¿Tienes un proyecto en mente o quieres colaborar? ¡Hablemos!
@@ -140,8 +149,9 @@ const Contact = () => {
           <div>
             <h3 className="text-2xl font-bold mb-6">Información de Contacto</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-8">
-              Estoy disponible para oportunidades de prácticas, proyectos freelance
-              o simplemente para conversar sobre desarrollo de software.
+              Estoy disponible para oportunidades de prácticas, proyectos
+              freelance o simplemente para conversar sobre desarrollo de
+              software.
             </p>
 
             <div className="space-y-6">
@@ -200,7 +210,9 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.name
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   } bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors`}
                   placeholder="Tu nombre"
                 />
@@ -224,7 +236,9 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.email
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   } bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors`}
                   placeholder="tu@email.com"
                 />
@@ -248,7 +262,9 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.subject ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.subject
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   } bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors`}
                   placeholder="Asunto del mensaje"
                 />
@@ -272,7 +288,9 @@ const Contact = () => {
                   required
                   rows="5"
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.message ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    errors.message
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   } bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors resize-none`}
                   placeholder="Escribe tu mensaje aquí..."
                 ></textarea>
@@ -284,9 +302,9 @@ const Contact = () => {
               {status.message && (
                 <div
                   className={`p-4 rounded-lg ${
-                    status.type === 'success'
-                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
-                      : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                    status.type === "success"
+                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+                      : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300"
                   }`}
                 >
                   {status.message}
