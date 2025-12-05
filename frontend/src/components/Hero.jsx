@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiMail, FiDownload } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiMail, FiDownload } from "react-icons/fi";
 
 const Hero = () => {
   return (
@@ -11,7 +11,7 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="mb-8 flex justify-center">
             <img
-              src="https://media.licdn.com/dms/image/v2/D4D03AQFMmwgFE29Giw/profile-displayphoto-crop_800_800/B4DZrgj5DYGkAI-/0/1764704099390?e=1766620800&v=beta&t=VJ-_NKIiXguUB-KwIY7PezPSye0XmQ9F4urT5FSZB80"
+              src="https://hsxqkllexhcjimpxdkrn.supabase.co/storage/v1/object/public/portfolio/Foto_de_perfil.jpg"
               alt="Perfil de Juan Esteban Agudelo"
               className="w-32 h-32 rounded-full border-4 border-primary-600 shadow-lg object-cover hover:scale-110 transition-transform duration-300"
             />
@@ -36,8 +36,9 @@ const Hero = () => {
 
           {/* Description */}
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
-            Estudiante de Desarrollo de Software en la Universidad del Valle (6to semestre).
-            Apasionado por crear soluciones web innovadoras con tecnologías modernas.
+            Estudiante de Desarrollo de Software en la Universidad del Valle
+            (6to semestre). Apasionado por crear soluciones web innovadoras con
+            tecnologías modernas.
           </p>
 
           {/* CTA Buttons */}
