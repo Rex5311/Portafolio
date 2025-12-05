@@ -28,7 +28,7 @@ const About = () => {
               <div className="w-80 h-80 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 p-1">
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-700">
                   <img
-                    src="https://ui-avatars.com/api/?name=Juan+Agudelo&size=320&background=3b82f6&color=fff&font-size=0.4"
+                    src="https://hsxqkllexhcjimpxdkrn.supabase.co/storage/v1/object/public/portfolio/Foto_de_perfil.jpg"
                     alt="Juan Esteban Agudelo Carmona"
                     className="w-full h-full object-cover"
                     onError={(e) => {

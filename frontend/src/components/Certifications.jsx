@@ -12,7 +12,7 @@ const Certifications = () => {
       issuer: "Amazon Web Services",
       date: "2024",
       image:
-        "https://via.placeholder.com/400x300/FF9900/FFFFFF?text=AWS+Certification",
+        "https://hsxqkllexhcjimpxdkrn.supabase.co/storage/v1/object/public/portfolio/Certificado_AWS.png",
       icon: <SiAmazonaws />,
       color: "from-orange-500 to-yellow-500",
       link: "#", // Agrega el link de verificación si lo tienes
@@ -22,7 +22,7 @@ const Certifications = () => {
       issuer: "Dev Senior",
       date: "2024",
       image:
-        "https://via.placeholder.com/400x300/3b82f6/FFFFFF?text=Dev+Senior+Certificate",
+        "https://hsxqkllexhcjimpxdkrn.supabase.co/storage/v1/object/public/portfolio/Certificado_dev_senior.png",
       icon: <FiAward />,
       color: "from-blue-500 to-purple-500",
       link: "#", // Agrega el link de verificación si lo tienes
