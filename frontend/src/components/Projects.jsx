@@ -1,122 +1,26 @@
-import { useState, useEffect } from 'react';
-import { FiGithub, FiExternalLink, FiFolder } from 'react-icons/fi';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/api';
+import { useState, useEffect } from "react";
+import { FiGithub, FiExternalLink, FiFolder } from "react-icons/fi";
+import { useProjects } from "../hooks/useProjects";
 
 /**
  * Projects Component
  * Muestra el portafolio de proyectos con filtrado por categoría
  */
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  /**
-   * Obtiene los proyectos desde la API
-   */
-  const fetchProjects = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await axios.get(API_ENDPOINTS.projects);
-      setProjects(response.data);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      setError('Error al cargar proyectos');
-      // Fallback to static projects if API fails
-      setProjects(staticProjects);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Static projects as fallback
-  const staticProjects = [
-    {
-      id: 1,
-      title: 'Sistema de Gestión Académica',
-      description:
-        'Aplicación web completa para gestionar estudiantes, cursos y calificaciones con panel administrativo.',
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'Express'],
-      category: 'fullstack',
-      github: 'https://github.com/juanagudelo/academic-system',
-      demo: 'https://academic-system-demo.com',
-      image: 'project1.jpg',
-    },
-    {
-      id: 2,
-      title: 'E-commerce Platform',
-      description:
-        'Tienda online con carrito de compras, pasarela de pagos y panel de administración de productos.',
-      technologies: ['React', 'Tailwind', 'Node.js', 'MongoDB'],
-      category: 'fullstack',
-      github: 'https://github.com/juanagudelo/ecommerce',
-      demo: 'https://ecommerce-demo.com',
-      image: 'project2.jpg',
-    },
-    {
-      id: 3,
-      title: 'Task Management App',
-      description:
-        'Aplicación de gestión de tareas con funcionalidades de colaboración en tiempo real.',
-      technologies: ['React', 'Firebase', 'Material-UI'],
-      category: 'frontend',
-      github: 'https://github.com/juanagudelo/task-manager',
-      demo: 'https://task-manager-demo.com',
-      image: 'project3.jpg',
-    },
-    {
-      id: 4,
-      title: 'API REST Blog',
-      description:
-        'API RESTful completa para un sistema de blog con autenticación JWT y CRUD completo.',
-      technologies: ['Node.js', 'Express', 'PostgreSQL', 'JWT'],
-      category: 'backend',
-      github: 'https://github.com/juanagudelo/blog-api',
-      demo: null,
-      image: 'project4.jpg',
-    },
-    {
-      id: 5,
-      title: 'Weather Dashboard',
-      description:
-        'Dashboard interactivo del clima con gráficos y pronósticos usando APIs externas.',
-      technologies: ['React', 'Chart.js', 'Tailwind', 'OpenWeather API'],
-      category: 'frontend',
-      github: 'https://github.com/juanagudelo/weather-dashboard',
-      demo: 'https://weather-dashboard-demo.com',
-      image: 'project5.jpg',
-    },
-    {
-      id: 6,
-      title: 'Inventory System',
-      description:
-        'Sistema de inventario con reportes, alertas de stock y gestión de proveedores.',
-      technologies: ['Python', 'FastAPI', 'MySQL', 'React'],
-      category: 'fullstack',
-      github: 'https://github.com/juanagudelo/inventory-system',
-      demo: null,
-      image: 'project6.jpg',
-    },
-  ];
+  const { projects: allProjects, loading, error } = useProjects();
+  const [filter, setFilter] = useState("all");
 
   const categories = [
-    { value: 'all', label: 'Todos' },
-    { value: 'fullstack', label: 'Fullstack' },
-    { value: 'frontend', label: 'Frontend' },
-    { value: 'backend', label: 'Backend' },
+    { value: "all", label: "Todos" },
+    { value: "fullstack", label: "Fullstack" },
+    { value: "frontend", label: "Frontend" },
+    { value: "backend", label: "Backend" },
   ];
 
   const filteredProjects =
-    filter === 'all'
-      ? projects
-      : projects.filter((project) => project.category === filter);
+    filter === "all"
+      ? allProjects
+      : allProjects.filter((project) => project.category === filter);
 
   return (
     <section
@@ -141,8 +45,8 @@ const Projects = () => {
                 onClick={() => setFilter(category.value)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   filter === category.value
-                    ? 'bg-primary-600 text-white shadow-lg scale-105'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? "bg-primary-600 text-white shadow-lg scale-105"
+                    : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                 }`}
               >
                 {category.label}
@@ -158,10 +62,7 @@ const Projects = () => {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
-              <div
-                key={project.id}
-                className="card group cursor-pointer"
-              >
+              <div key={project.id} className="card group cursor-pointer">
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-lg mb-4 bg-gradient-to-br from-primary-500 to-purple-600 h-48 flex items-center justify-center">
                   <FiFolder className="text-white text-6xl opacity-50" />
