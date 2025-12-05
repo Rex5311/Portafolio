@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useProjects } from "../hooks/useProjects";
 import { FiGithub, FiExternalLink, FiLoader } from "react-icons/fi";
 
