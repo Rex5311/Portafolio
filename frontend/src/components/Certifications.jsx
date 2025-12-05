@@ -1,5 +1,5 @@
-import { FiAward, FiExternalLink } from 'react-icons/fi';
-import { SiAmazonaws } from 'react-icons/si';
+import { FiAward, FiExternalLink } from "react-icons/fi";
+import { SiAmazonaws } from "react-icons/si";
 
 /**
  * Certifications Component
@@ -8,27 +8,32 @@ import { SiAmazonaws } from 'react-icons/si';
 const Certifications = () => {
   const certifications = [
     {
-      title: 'AWS Certification',
-      issuer: 'Amazon Web Services',
-      date: '2024',
-      image: '/images/cert-aws.jpg',
+      title: "AWS Certification",
+      issuer: "Amazon Web Services",
+      date: "2024",
+      image:
+        "https://via.placeholder.com/400x300/FF9900/FFFFFF?text=AWS+Certification",
       icon: <SiAmazonaws />,
-      color: 'from-orange-500 to-yellow-500',
-      link: '#', // Agrega el link de verificación si lo tienes
+      color: "from-orange-500 to-yellow-500",
+      link: "#", // Agrega el link de verificación si lo tienes
     },
     {
-      title: 'Dev Senior Certification',
-      issuer: 'Dev Senior',
-      date: '2024',
-      image: '/images/cert-devsenior.jpg',
+      title: "Dev Senior Certification",
+      issuer: "Dev Senior",
+      date: "2024",
+      image:
+        "https://via.placeholder.com/400x300/3b82f6/FFFFFF?text=Dev+Senior+Certificate",
       icon: <FiAward />,
-      color: 'from-blue-500 to-purple-500',
-      link: '#', // Agrega el link de verificación si lo tienes
+      color: "from-blue-500 to-purple-500",
+      link: "#", // Agrega el link de verificación si lo tienes
     },
   ];
 
   return (
-    <section id="certifications" className="section-padding bg-gray-100 dark:bg-gray-800">
+    <section
+      id="certifications"
+      className="section-padding bg-gray-100 dark:bg-gray-800"
+    >
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -36,7 +41,8 @@ const Certifications = () => {
           </h2>
           <div className="w-20 h-1 bg-primary-600 mx-auto mb-6"></div>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Certificaciones profesionales que validan mis conocimientos y habilidades
+            Certificaciones profesionales que validan mis conocimientos y
+            habilidades
           </p>
         </div>
 
@@ -54,16 +60,18 @@ const Certifications = () => {
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
                     // Fallback si la imagen no existe
-                    e.target.style.display = 'none';
-                    e.target.nextElementSibling.style.display = 'flex';
+                    e.target.style.display = "none";
+                    e.target.nextElementSibling.style.display = "flex";
                   }}
                 />
                 {/* Fallback cuando no hay imagen */}
-                <div 
+                <div
                   className="hidden absolute inset-0 flex-col items-center justify-center text-gray-400"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 >
-                  <div className={`text-6xl mb-4 bg-gradient-to-br ${cert.color} bg-clip-text text-transparent`}>
+                  <div
+                    className={`text-6xl mb-4 bg-gradient-to-br ${cert.color} bg-clip-text text-transparent`}
+                  >
                     {cert.icon}
                   </div>
                   <p className="text-sm">Certificado</p>
@@ -72,7 +80,9 @@ const Certifications = () => {
 
               {/* Certificate Info */}
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-lg bg-gradient-to-br ${cert.color} text-white text-2xl flex-shrink-0`}>
+                <div
+                  className={`p-3 rounded-lg bg-gradient-to-br ${cert.color} text-white text-2xl flex-shrink-0`}
+                >
                   {cert.icon}
                 </div>
                 <div className="flex-1">
@@ -83,7 +93,7 @@ const Certifications = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-500 mb-3">
                     {cert.date}
                   </p>
-                  {cert.link && cert.link !== '#' && (
+                  {cert.link && cert.link !== "#" && (
                     <a
                       href={cert.link}
                       target="_blank"
